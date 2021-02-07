@@ -1,3 +1,5 @@
+const Discord = require('discord.js')
+
 module.exports = textCN = {
     text: `coloque sua mensagem`
 }
@@ -36,4 +38,11 @@ module.exports = textTRAD = {
 
 module.exports = textTYPE = {
     text: `coloque sua mensagem`
+}
+
+module.exports = commandSites = {
+    embed: new Discord.MessageEmbed()
+        .setColor('#0000ff')
+        .setDescription(" \n**Site Oficial**: <https://www.google.com/> \nSite que **Solo Leveling** está hospedado: <https://www.google.com/> ")
+    
 }

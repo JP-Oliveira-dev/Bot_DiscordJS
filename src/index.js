@@ -3,6 +3,8 @@ const app = express();
 const Discord = require("discord.js"); 
 const client = new Discord.Client(); 
 const config = require("../config/config.json"); 
+const texts = require('../texts/texts')
+const globalRandomMessage = require('../commands/randomMessage.js')
 
 app.get("/", (request, response) => {
   const ping = new Date();
@@ -17,6 +19,24 @@ app.listen(process.env.PORT);
 client.on('ready', () => {
   client.user.setActivity('prefixo ()', {type: undefined});
 });
+
+
+client.on('message', message =>{
+  if(!message.member.hasPermission("MANAGE_CHANNELS")) return;
+
+  const args = message.content
+        .trim().slice(config.prefix.length)
+        .split(/ +/g);
+    if(!message.content.startsWith(config.prefix)) return;
+    const command = args.shift().toLowerCase();
+
+  if(command === 'sua wordKey para o comando') {
+    message.delete().catch(O_o => {});
+    let temporizador = setInterval(() => {
+    return message.channel.send(globalRandomMessage());
+    }, 2000)
+  }
+})
 
 
 client.on('message', message => {
@@ -39,30 +59,47 @@ client.on('message', message => {
 
 });
 
+
 client.on('message', message => {
-   if (message.content.startsWith(`<@!${client.user.id}>`) || 
-    message.content.startsWith(`<@${client.user.id}>`)) return;
+    if (message.content.startsWith(`<@!${client.user.id}>`) || 
+        message.content.startsWith(`<@${client.user.id}>`)) return;
     if(message.author.bot) return;
     if(message.channel.type === 'dm') return;
-    if(!message.content.startsWith(config.prefix)) return;
-
-    const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
-    const comando = args.shift().toLowerCase();
 
     
-    if(comando === 'sites') {
-      let embed1 = new Discord.MessageEmbed()
-        .setColor('#0000ff')
-        .setDescription(" \n**Site Oficial**: <https://www.google.com/> \nSite que **Solo Leveling** está hospedado: <https://www.google.com/> ")
-      message.channel.send(embed1)
-  };
+    function commandSites(){
+      return 'aaaaaa'
+    }
+      
+      
+    const commandDuvidas = {
+      sites: commandSites,
+    }
 
-  if(comando === 'obrasativas') {
-      let embed2 = new Discord.MessageEmbed()
-        .setColor('#0000ff')
-        .setDescription("Atualmente nos encontramos com **9500** obras ativas")
+    
+    if(!message.content.startsWith(config.prefix)) return;
+    const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
+    const comando = args.shift().toLowerCase();
+    
+    commandDuvidas[comando]();
 
-      message.channel.send(embed2)
-}});  // siga o padrão e add mais se desejar. 
+
+
+
+    
+//     if(comando === 'sites') {
+//       let embed1 = new Discord.MessageEmbed()
+//         .setColor('#0000ff')
+//         .setDescription(" \n**Site Oficial**: <https://www.google.com/> \nSite que **Solo Leveling** está hospedado: <https://www.google.com/> ")
+//       message.channel.send(embed1)
+//   };
+
+//   if(comando === 'obrasativas') {
+//       let embed2 = new Discord.MessageEmbed()
+//         .setColor('#0000ff')
+//         .setDescription("Atualmente nos encontramos com **9500** obras ativas")
+
+//       message.channel.send(embed2)
+});  // siga o padrão e add mais se desejar. 
 
 client.login(config.token); 
