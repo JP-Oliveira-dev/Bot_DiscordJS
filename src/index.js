@@ -59,47 +59,22 @@ client.on('message', message => {
 
 });
 
+client.on('message', message => {    
+   if(comando === 'sites') {
+      let embed1 = new Discord.MessageEmbed()
+        .setColor('#0000ff')
+        .setDescription(" \n**Site Oficial**: <https://www.google.com/>")
+      message.channel.send(embed1)
+  };
 
-client.on('message', message => {
-    if (message.content.startsWith(`<@!${client.user.id}>`) || 
-        message.content.startsWith(`<@${client.user.id}>`)) return;
-    if(message.author.bot) return;
-    if(message.channel.type === 'dm') return;
+  if(comando === 'obrasativas') {
+      let embed2 = new Discord.MessageEmbed()
+        .setColor('#0000ff')
+        .setDescription('texto...')
 
-    
-    function commandSites(){
-      return 'aaaaaa'
+      message.channel.send(embed2)
     }
-      
-      
-    const commandDuvidas = {
-      sites: commandSites,
-    }
 
-    
-    if(!message.content.startsWith(config.prefix)) return;
-    const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
-    const comando = args.shift().toLowerCase();
-    
-    commandDuvidas[comando]();
-
-
-
-
-    
-//     if(comando === 'sites') {
-//       let embed1 = new Discord.MessageEmbed()
-//         .setColor('#0000ff')
-//         .setDescription(" \n**Site Oficial**: <https://www.google.com/> \nSite que **Solo Leveling** está hospedado: <https://www.google.com/> ")
-//       message.channel.send(embed1)
-//   };
-
-//   if(comando === 'obrasativas') {
-//       let embed2 = new Discord.MessageEmbed()
-//         .setColor('#0000ff')
-//         .setDescription("Atualmente nos encontramos com **9500** obras ativas")
-
-//       message.channel.send(embed2)
 });  // siga o padrão e add mais se desejar. 
 
 client.login(config.token); 
